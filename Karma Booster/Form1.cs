@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -21,6 +20,9 @@ namespace KarmaBooster__Windows_Form_version_
         private string[] m_messagesToPlurk;
         private int m_messageIndex;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +36,14 @@ namespace KarmaBooster__Windows_Form_version_
             m_notifyIcon.Visible = false;
         }
 
+        /// <summary>
+        /// Timer event handler:
+        ///     1. Post a new Plurk message.
+        ///     2. Increase m_messageIndex so that the next line in "Content"
+        ///        will be posted next time.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void myTimer_Tick(object sender, EventArgs e)
         {
             myTimer.Stop();
@@ -49,12 +59,17 @@ namespace KarmaBooster__Windows_Form_version_
             myTimer.Enabled = true;
         }
 
+        /// <summary>
+        /// Post a new Plurk message.
+        /// </summary>
+        /// <returns>true: message posted successfully; false: otherwise.</returns>
         private bool m_DoNewPlurk()
         {
             if (!m_LoginPlurk())
             {
                 return false;
             }
+            m_Output("Now logged on as " + m_textUsername.Text + ".");
 
             // compose limit-to string
             string limit_to = "";
@@ -92,11 +107,19 @@ namespace KarmaBooster__Windows_Form_version_
             return true;
         }
         
+        /// <summary>
+        /// Print a piece of message in output field.
+        /// </summary>
+        /// <param name="msg">The message to be printed.</param>
         private void m_Output(string msg)
         {
             m_textOutput.AppendText(DateTime.Now.ToString("[yyyy/MM/dd HH:mm:ss] ") + msg + "\n");
         }
 
+        /// <summary>
+        /// Login using current username/password.
+        /// </summary>
+        /// <returns>true: successfully logged on; false: otherwise.</returns>
         private bool m_LoginPlurk()
         {
             if (m_textUsername.Text == "")
@@ -108,6 +131,11 @@ namespace KarmaBooster__Windows_Form_version_
             return plurk.Login( m_textUsername.Text, m_textPassword.Text);
         }
 
+        /// <summary>
+        /// Scheduling checkbox event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void m_cbScheduling_CheckedChanged(object sender, EventArgs e)
         {
             if (m_cbScheduling.Checked)
@@ -124,11 +152,21 @@ namespace KarmaBooster__Windows_Form_version_
             }
         }
 
+        /// <summary>
+        /// Close button event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void m_btnClose_Click(object sender, EventArgs e)
         {
             Close();
         }
 
+        /// <summary>
+        /// Load Friend List button event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void m_btnLoadFriends_Click(object sender, EventArgs e)
         {
             if (!plurk.isLogged)
@@ -155,6 +193,11 @@ namespace KarmaBooster__Windows_Form_version_
             }
         }
 
+        /// <summary>
+        /// Action (Go/Stop) button event handler.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void m_btnAction_Click(object sender, EventArgs e)
         {
             if (myTimer.Enabled == false)
@@ -207,7 +250,14 @@ namespace KarmaBooster__Windows_Form_version_
             }
         }
 
-        // The following 2 methods are operations for system-tray notification icon.
+        #region These 2 methods are operations for system-tray notify icon.
+
+        /// <summary>
+        /// Window resizing event handler.
+        /// The form window will be hidden, and the notify icon will be shown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Resize(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Minimized)
@@ -217,11 +267,18 @@ namespace KarmaBooster__Windows_Form_version_
             }
         }
 
+        /// <summary>
+        /// The event handler when user double-clicked on the notify icon.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void m_notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             Show();
             WindowState = FormWindowState.Normal;
             m_notifyIcon.Visible = false;
         }
+
+        #endregion
     }
 }
