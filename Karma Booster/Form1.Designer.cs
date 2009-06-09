@@ -52,6 +52,7 @@
             this.m_btnAction = new System.Windows.Forms.Button();
             this.m_btnClose = new System.Windows.Forms.Button();
             this.m_cbAllowComments = new System.Windows.Forms.CheckBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -261,12 +262,24 @@
             this.m_cbAllowComments.Text = "Allow comments";
             this.m_cbAllowComments.UseVisualStyleBackColor = true;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(10, 468);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(116, 12);
+            this.linkLabel1.TabIndex = 21;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "About Karma Booster...";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-            this.ClientSize = new System.Drawing.Size(414, 475);
+            this.ClientSize = new System.Drawing.Size(414, 489);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.m_cbAllowComments);
             this.Controls.Add(this.m_btnClose);
             this.Controls.Add(this.m_btnAction);
@@ -322,6 +335,7 @@
         private System.Windows.Forms.Button m_btnAction;
         private System.Windows.Forms.Button m_btnClose;
         private System.Windows.Forms.CheckBox m_cbAllowComments;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 
