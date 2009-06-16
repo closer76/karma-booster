@@ -13,12 +13,44 @@ namespace KarmaBooster__Windows_Form_version_
     public partial class Form1 : Form
     {
         private PlurkApi.PlurkApi plurk = new PlurkApi.PlurkApi();
+        private PlurkMessages m_messagesInList;
 
         private System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private int timerInterval;
 
         private string[] m_messagesToPlurk;
         private int m_messageIndex;
+
+        Dictionary<string, string> m_qualifierTable = new Dictionary<string, string>()
+        {
+            { "(none)", ":"},
+            { "Loves", "loves"},
+            { "Likes", "likes"},
+            { "Shares", "shares"},
+            { "Gives", "gives"},
+            { "Hates", "hates"},
+            { "Wants", "wants"},
+            { "Wishes", "wishes"},
+            { "Needs", "needs"},
+            { "Will", "will"},
+            { "Hopes", "hopes"},
+            { "Asks", "asks"},
+            { "Has", "has"},
+            { "Was", "was"},
+            { "Wonders", "wonders"},
+            { "Feels", "feels"},
+            { "Thinks", "thinks"},
+            { "Says", "says"},
+            { "Is", "is"}
+        };
+
+        Dictionary<string, string> m_languageTable = new Dictionary<string, string>()
+        {
+            { "English", "en"},
+            { "Traditional Chinese", "tr_ch"},
+            { "French", "fr"},
+            { "Japanese", "jp"}
+        };
 
         /// <summary>
         /// Constructor.
@@ -175,6 +207,10 @@ namespace KarmaBooster__Windows_Form_version_
             if (plurk.myFriends != null)
             {
                 m_chklstFriendList.Items.Clear();
+                m_comboUid.Items.Clear();
+                m_comboUid.Items.Add("(me)");
+                m_comboUid.SelectedIndex = 0;
+
                 SortedDictionary<int, PlurkFriend> sorted_friend_array = new SortedDictionary<int, PlurkFriend>();
 
                 foreach (PlurkApi.PlurkFriend friend in plurk.myFriends)
@@ -185,6 +221,7 @@ namespace KarmaBooster__Windows_Form_version_
                 foreach ( PlurkFriend friend in sorted_friend_array.Values)
                 {
                     m_chklstFriendList.Items.Add(friend.uid.ToString() + " (" + friend.nick_name + ")");
+                    m_comboUid.Items.Add(friend.full_name);
                 }
             }
             else
@@ -285,6 +322,49 @@ namespace KarmaBooster__Windows_Form_version_
         {
             AboutBox about = new AboutBox();
             about.ShowDialog();
+        }
+
+        private void m_btnFetchList_Click(object sender, EventArgs e)
+        {
+            int _uid = plurk.uid;
+            if (m_comboUid.SelectedIndex == 0)
+            {
+                _uid = plurk.uid;
+            }
+            else
+            {
+                string full_name = m_comboUid.SelectedItem.ToString();
+                foreach (PlurkFriend friend in plurk.myFriends)
+                {
+                    if (friend.full_name == full_name)
+                    {
+                        _uid = friend.uid;
+                        break;
+                    }
+                }
+            }
+
+            string date_from = m_dtpDateFrom.Value.ToUniversalTime().ToString("s");
+            string date_offset = m_dtpDateTo.Value.ToUniversalTime().ToString("s");
+
+            m_messagesInList = plurk.getMessages(_uid, date_from, date_offset, false);
+
+            if (m_messagesInList != null)
+            {
+                m_listMessages.Items.Clear();
+                for (int i = 0; i < m_messagesInList.Count; i++)
+                {
+                    m_listMessages.Items.Add(m_messagesInList[i].content_raw.Substring(0, 20) + "...");
+                }
+                /*
+                foreach (PlurkMessage msg in m_messagesInList)
+                {
+                    if (msg.owner_id == _uid)
+                        //m_listMessages.Items.Add(msg.content_raw.Substring(0, 10) + "...");
+                        m_listMessages.Items.Add(msg.posted);
+                }
+                */
+            }
         }
     }
 }

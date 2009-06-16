@@ -451,7 +451,7 @@ namespace PlurkApi
                 {
                     jsonString = jsonString + "}";
                 }
-                jsonString = new Regex("new Date\\((.*)\\)").Replace(jsonString, "$1");
+                jsonString = new Regex("new Date\\(([^\\(\\)]*)\\)").Replace(jsonString, "$1");
                 responses.Add(new PlurkMessageResponse(jsonString));
             }
             return responses;
@@ -465,21 +465,29 @@ namespace PlurkApi
         /// <param name="data_offset">End datetime in UTC format. DateTime.ToUniversalTime().ToString("s")</param>
         /// <param name="fetch_responses">True if you wanna get all responses for all plurk messages</param>
         /// <returns>A collection with plurk messages</returns>
-        public PlurkMessages getMessages(int uid, string date_from, string data_offset, bool fetch_responses)
+        public PlurkMessages getMessages(int uid, string date_from, string date_offset, bool fetch_responses)
         {
             string jsonString = "";
             string url="http://www.plurk.com/TimeLine/getPlurks";
             string data = "";
             PlurkMessages messages = new PlurkMessages();
 
-            if (date_from == "")
+            //------ Old method
+            //if (date_from == "")
+            //{
+            //    data = web.GetPage(url + "?user_id=" + uid.ToString(), null, ref cookie, true);
+            //}
+            //else 
+            //{
+            //    data = web.GetPage(url + "?" + string.Format("user_id={0}&from_date={1}&offset={2}", uid, HttpUtility.UrlEncode(date_from), HttpUtility.UrlEncode(date_offset)), null,ref cookie, true);
+            //    data = web.GetPage(url + "?" + string.Format("user_id={0}&date_from={1}&date_to={2}", uid, HttpUtility.UrlEncode(date_from), HttpUtility.UrlEncode(date_offset)), null, ref cookie, true);
+            //}
+
+            if (date_offset == "")
             {
-                data = web.GetPage(url + "?user_id=" + uid.ToString(), null, ref cookie, true);
+                date_offset = new DateTime().ToUniversalTime().ToString("s");
             }
-            else 
-            {
-                data = web.GetPage(url + "?" + string.Format("user_id={0}&from_date={1}&offset={2}", uid, HttpUtility.UrlEncode(date_from), HttpUtility.UrlEncode(data_offset)), null,ref cookie, true);
-            }
+            data = web.GetPage(url + "?" + string.Format("user_id={0}&offset=\"{1}\"", uid, HttpUtility.UrlEncode(date_offset)), null,ref cookie, true);
 
             if (data == "") return null;
             if (data == "[]") return messages;
@@ -498,7 +506,7 @@ namespace PlurkApi
                 {
                     jsonString = jsonString + "}";
                 }
-                jsonString = new Regex("new Date\\((.*)\\)").Replace(jsonString, "$1");
+                jsonString = new Regex("new Date\\(([^\\(\\)]*)\\)").Replace(jsonString, "$1", 1);
                 PlurkMessage msg = new PlurkMessage(jsonString);
                 if (fetch_responses) msg.responses = this.getMessagesResponses(msg.plurk_id);
                 messages.Add(msg);
@@ -537,7 +545,7 @@ namespace PlurkApi
                 {
                     jsonString = jsonString + "}";
                 }
-                jsonString = new Regex("new Date\\((.*)\\)").Replace(jsonString, "$1");
+                jsonString = new Regex("new Date\\(([^\\(\\)]*)\\)").Replace(jsonString, "$1");
                 PlurkMessage msg = new PlurkMessage(jsonString);
                 if (fetch_responses) msg.responses = this.getMessagesResponses(msg.plurk_id);
                 messages.Add(msg);
@@ -585,7 +593,7 @@ namespace PlurkApi
             data = data.Remove(0, 1);
             data = data.Remove(data.Length - 1, 1);
             data = new Regex("karma': ([\\d\\.]+),").Replace(data, "karma': '$1',");
-            //data = new Regex("new Date\\((.*)\\)").Replace(data, "$1");
+            //data = new Regex("new Date\\(([^\\(\\)]*)\\)").Replace(data, "$1");
             data = new Regex(": u'").Replace(data, ": '");
             data = new Regex(": u\"").Replace(data, ": \"");
             data = new Regex("L, '").Replace(data, ", '");
