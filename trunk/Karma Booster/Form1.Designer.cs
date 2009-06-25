@@ -32,33 +32,25 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.m_cbScheduling = new System.Windows.Forms.CheckBox();
             this.m_notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.m_textUsername = new System.Windows.Forms.TextBox();
-            this.m_textContent = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.m_textOutput = new System.Windows.Forms.TextBox();
             this.m_textPassword = new System.Windows.Forms.TextBox();
-            this.m_chklstFriendList = new System.Windows.Forms.CheckedListBox();
             this.m_btnLoadFriends = new System.Windows.Forms.Button();
-            this.m_textHour = new System.Windows.Forms.TextBox();
-            this.m_textMinute = new System.Windows.Forms.TextBox();
-            this.m_textSecond = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.m_labelSecond = new System.Windows.Forms.Label();
             this.m_btnAction = new System.Windows.Forms.Button();
             this.m_btnClose = new System.Windows.Forms.Button();
-            this.m_cbAllowComments = new System.Windows.Forms.CheckBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.m_tabFunction = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.m_btnDelete = new System.Windows.Forms.Button();
+            this.m_btnAdd = new System.Windows.Forms.Button();
+            this.m_listNewPlurks = new System.Windows.Forms.ListView();
             this.colPostTime = new System.Windows.Forms.ColumnHeader();
             this.colComment = new System.Windows.Forms.ColumnHeader();
             this.colLimitTo = new System.Windows.Forms.ColumnHeader();
+            this.colLanguage = new System.Windows.Forms.ColumnHeader();
+            this.colQualifier = new System.Windows.Forms.ColumnHeader();
             this.colContent = new System.Windows.Forms.ColumnHeader();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label11 = new System.Windows.Forms.Label();
@@ -103,35 +95,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Password:";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(188, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 12);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Limit-to:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 12);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Content:";
-            // 
-            // m_cbScheduling
-            // 
-            this.m_cbScheduling.AutoSize = true;
-            this.m_cbScheduling.Location = new System.Drawing.Point(6, 153);
-            this.m_cbScheduling.Name = "m_cbScheduling";
-            this.m_cbScheduling.Size = new System.Drawing.Size(113, 16);
-            this.m_cbScheduling.TabIndex = 11;
-            this.m_cbScheduling.Text = "Post message every";
-            this.m_cbScheduling.UseVisualStyleBackColor = true;
-            this.m_cbScheduling.CheckedChanged += new System.EventHandler(this.m_cbScheduling_CheckedChanged);
-            // 
             // m_notifyIcon
             // 
             this.m_notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_notifyIcon.Icon")));
@@ -147,21 +110,12 @@
             this.m_textUsername.Size = new System.Drawing.Size(124, 22);
             this.m_textUsername.TabIndex = 6;
             // 
-            // m_textContent
-            // 
-            this.m_textContent.Location = new System.Drawing.Point(6, 24);
-            this.m_textContent.Multiline = true;
-            this.m_textContent.Name = "m_textContent";
-            this.m_textContent.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.m_textContent.Size = new System.Drawing.Size(174, 123);
-            this.m_textContent.TabIndex = 10;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.m_textOutput);
             this.groupBox1.Location = new System.Drawing.Point(12, 419);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(388, 71);
+            this.groupBox1.Size = new System.Drawing.Size(476, 71);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Log window";
@@ -174,7 +128,7 @@
             this.m_textOutput.Name = "m_textOutput";
             this.m_textOutput.ReadOnly = true;
             this.m_textOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.m_textOutput.Size = new System.Drawing.Size(376, 44);
+            this.m_textOutput.Size = new System.Drawing.Size(463, 44);
             this.m_textOutput.TabIndex = 15;
             // 
             // m_textPassword
@@ -185,18 +139,6 @@
             this.m_textPassword.Size = new System.Drawing.Size(124, 22);
             this.m_textPassword.TabIndex = 7;
             this.m_textPassword.UseSystemPasswordChar = true;
-            // 
-            // m_chklstFriendList
-            // 
-            this.m_chklstFriendList.CheckOnClick = true;
-            this.m_chklstFriendList.FormattingEnabled = true;
-            this.m_chklstFriendList.HorizontalScrollbar = true;
-            this.m_chklstFriendList.Items.AddRange(new object[] {
-            "6037 (karma_trends)"});
-            this.m_chklstFriendList.Location = new System.Drawing.Point(190, 24);
-            this.m_chklstFriendList.Name = "m_chklstFriendList";
-            this.m_chklstFriendList.Size = new System.Drawing.Size(184, 123);
-            this.m_chklstFriendList.TabIndex = 8;
             // 
             // m_btnLoadFriends
             // 
@@ -209,63 +151,9 @@
             this.m_btnLoadFriends.UseVisualStyleBackColor = true;
             this.m_btnLoadFriends.Click += new System.EventHandler(this.m_btnLoadFriends_Click);
             // 
-            // m_textHour
-            // 
-            this.m_textHour.Enabled = false;
-            this.m_textHour.Location = new System.Drawing.Point(125, 151);
-            this.m_textHour.Name = "m_textHour";
-            this.m_textHour.Size = new System.Drawing.Size(23, 22);
-            this.m_textHour.TabIndex = 12;
-            this.m_textHour.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // m_textMinute
-            // 
-            this.m_textMinute.Enabled = false;
-            this.m_textMinute.Location = new System.Drawing.Point(199, 151);
-            this.m_textMinute.Name = "m_textMinute";
-            this.m_textMinute.Size = new System.Drawing.Size(25, 22);
-            this.m_textMinute.TabIndex = 13;
-            this.m_textMinute.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // m_textSecond
-            // 
-            this.m_textSecond.Enabled = false;
-            this.m_textSecond.Location = new System.Drawing.Point(288, 151);
-            this.m_textSecond.Name = "m_textSecond";
-            this.m_textSecond.Size = new System.Drawing.Size(25, 22);
-            this.m_textSecond.TabIndex = 14;
-            this.m_textSecond.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(154, 154);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 12);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "hour(s)";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(230, 154);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 12);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "minute(s)";
-            // 
-            // m_labelSecond
-            // 
-            this.m_labelSecond.AutoSize = true;
-            this.m_labelSecond.Location = new System.Drawing.Point(319, 154);
-            this.m_labelSecond.Name = "m_labelSecond";
-            this.m_labelSecond.Size = new System.Drawing.Size(49, 12);
-            this.m_labelSecond.TabIndex = 17;
-            this.m_labelSecond.Text = "second(s)";
-            // 
             // m_btnAction
             // 
-            this.m_btnAction.Location = new System.Drawing.Point(68, 384);
+            this.m_btnAction.Location = new System.Drawing.Point(84, 384);
             this.m_btnAction.Name = "m_btnAction";
             this.m_btnAction.Size = new System.Drawing.Size(94, 29);
             this.m_btnAction.TabIndex = 18;
@@ -275,25 +163,13 @@
             // 
             // m_btnClose
             // 
-            this.m_btnClose.Location = new System.Drawing.Point(250, 384);
+            this.m_btnClose.Location = new System.Drawing.Point(335, 384);
             this.m_btnClose.Name = "m_btnClose";
             this.m_btnClose.Size = new System.Drawing.Size(94, 29);
             this.m_btnClose.TabIndex = 19;
             this.m_btnClose.Text = "Close";
             this.m_btnClose.UseVisualStyleBackColor = true;
             this.m_btnClose.Click += new System.EventHandler(this.m_btnClose_Click);
-            // 
-            // m_cbAllowComments
-            // 
-            this.m_cbAllowComments.AutoSize = true;
-            this.m_cbAllowComments.Checked = true;
-            this.m_cbAllowComments.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.m_cbAllowComments.Location = new System.Drawing.Point(6, 175);
-            this.m_cbAllowComments.Name = "m_cbAllowComments";
-            this.m_cbAllowComments.Size = new System.Drawing.Size(102, 16);
-            this.m_cbAllowComments.TabIndex = 20;
-            this.m_cbAllowComments.Text = "Allow comments";
-            this.m_cbAllowComments.UseVisualStyleBackColor = true;
             // 
             // linkLabel1
             // 
@@ -315,64 +191,90 @@
             this.m_tabFunction.Multiline = true;
             this.m_tabFunction.Name = "m_tabFunction";
             this.m_tabFunction.SelectedIndex = 0;
-            this.m_tabFunction.Size = new System.Drawing.Size(476, 321);
+            this.m_tabFunction.Size = new System.Drawing.Size(480, 321);
             this.m_tabFunction.TabIndex = 22;
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage1.Controls.Add(this.listView1);
-            this.tabPage1.Controls.Add(this.m_chklstFriendList);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.m_cbAllowComments);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.m_textContent);
-            this.tabPage1.Controls.Add(this.m_cbScheduling);
-            this.tabPage1.Controls.Add(this.m_labelSecond);
-            this.tabPage1.Controls.Add(this.m_textHour);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.m_textMinute);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.m_textSecond);
+            this.tabPage1.Controls.Add(this.m_btnDelete);
+            this.tabPage1.Controls.Add(this.m_btnAdd);
+            this.tabPage1.Controls.Add(this.m_listNewPlurks);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(468, 293);
+            this.tabPage1.Size = new System.Drawing.Size(472, 293);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "New Plurk";
             // 
-            // listView1
+            // m_btnDelete
             // 
-            this.listView1.BackColor = System.Drawing.SystemColors.Window;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.m_btnDelete.Enabled = false;
+            this.m_btnDelete.Location = new System.Drawing.Point(364, 255);
+            this.m_btnDelete.Name = "m_btnDelete";
+            this.m_btnDelete.Size = new System.Drawing.Size(101, 22);
+            this.m_btnDelete.TabIndex = 23;
+            this.m_btnDelete.Text = "Delete";
+            this.m_btnDelete.UseVisualStyleBackColor = true;
+            this.m_btnDelete.Click += new System.EventHandler(this.m_btnDelete_Click);
+            // 
+            // m_btnAdd
+            // 
+            this.m_btnAdd.Location = new System.Drawing.Point(257, 254);
+            this.m_btnAdd.Name = "m_btnAdd";
+            this.m_btnAdd.Size = new System.Drawing.Size(101, 23);
+            this.m_btnAdd.TabIndex = 22;
+            this.m_btnAdd.Text = "Add...";
+            this.m_btnAdd.UseVisualStyleBackColor = true;
+            this.m_btnAdd.Click += new System.EventHandler(this.m_btnAdd_Click);
+            // 
+            // m_listNewPlurks
+            // 
+            this.m_listNewPlurks.BackColor = System.Drawing.SystemColors.Window;
+            this.m_listNewPlurks.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colPostTime,
             this.colComment,
             this.colLimitTo,
+            this.colLanguage,
+            this.colQualifier,
             this.colContent});
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(8, 197);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(367, 89);
-            this.listView1.TabIndex = 21;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.m_listNewPlurks.GridLines = true;
+            this.m_listNewPlurks.Location = new System.Drawing.Point(2, 6);
+            this.m_listNewPlurks.Name = "m_listNewPlurks";
+            this.m_listNewPlurks.Size = new System.Drawing.Size(463, 233);
+            this.m_listNewPlurks.TabIndex = 21;
+            this.m_listNewPlurks.UseCompatibleStateImageBehavior = false;
+            this.m_listNewPlurks.View = System.Windows.Forms.View.Details;
+            this.m_listNewPlurks.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.m_listNewPlurks_ItemSelectionChanged);
             // 
             // colPostTime
             // 
             this.colPostTime.Text = "PostTime";
+            this.colPostTime.Width = 85;
             // 
             // colComment
             // 
-            this.colComment.Text = "Comment?";
-            this.colComment.Width = 68;
+            this.colComment.Text = "Re?";
+            this.colComment.Width = 41;
             // 
             // colLimitTo
             // 
             this.colLimitTo.Text = "Limit To";
+            this.colLimitTo.Width = 66;
+            // 
+            // colLanguage
+            // 
+            this.colLanguage.Text = "Lang";
+            this.colLanguage.Width = 36;
+            // 
+            // colQualifier
+            // 
+            this.colQualifier.Text = "Qualifier";
             // 
             // colContent
             // 
             this.colContent.Text = "Plurk Content";
+            this.colContent.Width = 168;
             // 
             // tabPage2
             // 
@@ -394,7 +296,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(380, 293);
+            this.tabPage2.Size = new System.Drawing.Size(472, 293);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Comment on Plurk";
             // 
@@ -484,6 +386,7 @@
             // 
             // m_btnFetchList
             // 
+            this.m_btnFetchList.Enabled = false;
             this.m_btnFetchList.Location = new System.Drawing.Point(72, 92);
             this.m_btnFetchList.Name = "m_btnFetchList";
             this.m_btnFetchList.Size = new System.Drawing.Size(74, 27);
@@ -556,7 +459,6 @@
             this.groupBox1.PerformLayout();
             this.m_tabFunction.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
@@ -570,26 +472,14 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox m_cbScheduling;
         private System.Windows.Forms.NotifyIcon m_notifyIcon;
         private System.Windows.Forms.TextBox m_textUsername;
-        private System.Windows.Forms.TextBox m_textContent;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox m_textOutput;
         private System.Windows.Forms.TextBox m_textPassword;
-        private System.Windows.Forms.CheckedListBox m_chklstFriendList;
         private System.Windows.Forms.Button m_btnLoadFriends;
-        private System.Windows.Forms.TextBox m_textHour;
-        private System.Windows.Forms.TextBox m_textMinute;
-        private System.Windows.Forms.TextBox m_textSecond;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label m_labelSecond;
         private System.Windows.Forms.Button m_btnAction;
         private System.Windows.Forms.Button m_btnClose;
-        private System.Windows.Forms.CheckBox m_cbAllowComments;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.TabControl m_tabFunction;
         private System.Windows.Forms.TabPage tabPage1;
@@ -609,11 +499,15 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox m_textMinutesComment;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView m_listNewPlurks;
         private System.Windows.Forms.ColumnHeader colPostTime;
         private System.Windows.Forms.ColumnHeader colComment;
         private System.Windows.Forms.ColumnHeader colLimitTo;
         private System.Windows.Forms.ColumnHeader colContent;
+        private System.Windows.Forms.ColumnHeader colLanguage;
+        private System.Windows.Forms.ColumnHeader colQualifier;
+        private System.Windows.Forms.Button m_btnAdd;
+        private System.Windows.Forms.Button m_btnDelete;
     }
 }
 
