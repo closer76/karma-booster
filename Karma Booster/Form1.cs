@@ -18,8 +18,7 @@ namespace KarmaBooster__Windows_Form_version_
         private System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
         private int timerInterval;
 
-        private string[] m_messagesToPlurk;
-        private int m_messageIndex;
+        private List<ActionItem> m_ActionList = new List<ActionItem>();
 
         Dictionary<string, string> m_qualifierTable = new Dictionary<string, string>()
         {
@@ -52,6 +51,8 @@ namespace KarmaBooster__Windows_Form_version_
             { "Japanese", "jp"}
         };
 
+        SortedDictionary<int, string> m_friendList = new SortedDictionary<int, string>();
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -59,10 +60,6 @@ namespace KarmaBooster__Windows_Form_version_
         {
             InitializeComponent();
             myTimer.Tick += new EventHandler(myTimer_Tick);
-
-            // Hide "seconds" control
-            m_textSecond.Hide();
-            m_labelSecond.Hide();
 
             // Don't show notify icon when the window is in normal state
             m_notifyIcon.Visible = false;
@@ -79,54 +76,80 @@ namespace KarmaBooster__Windows_Form_version_
         void myTimer_Tick(object sender, EventArgs e)
         {
             myTimer.Stop();
+            DateTime now = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, 0);
 
-            m_DoNewPlurk();
-
-            m_messageIndex++;
-            if (m_messageIndex >= m_messagesToPlurk.Length)
+            for (int i = m_ActionList.Count - 1; i >= 0; i--)
             {
-                m_messageIndex = 0;
-            }
+                switch (m_ActionList[i].Type)
+                {
+                case ActionType.Periodic:
+                    m_ActionList[i].RemainedMinutes--;
+                    if (m_ActionList[i].RemainedMinutes <= 0)
+                    {
+                        m_DoNewPlurk(m_ActionList[i].Message);
+                        m_ActionList[i].RemainedMinutes = m_ActionList[i].Hours * 60 + m_ActionList[i].Minutes;
+                    }
+                    m_UpdateActionListUi();
+                    break;
 
+                case ActionType.OneShot:
+                    if (m_ActionList[i].ExactTime == now)
+                    {
+                        m_DoNewPlurk(m_ActionList[i].Message);
+                        m_ActionList.RemoveAt(i);
+                        m_UpdateActionListUi();
+                    }
+                    break;
+
+                case ActionType.Immediate:
+                    m_DoNewPlurk(m_ActionList[i].Message);
+                    m_ActionList.RemoveAt(i);
+                    m_UpdateActionListUi();
+                    break;
+                }
+            }
             myTimer.Enabled = true;
         }
 
         /// <summary>
         /// Post a new Plurk message.
         /// </summary>
+        /// <param name="item">The message item to be plurked.</param>
         /// <returns>true: message posted successfully; false: otherwise.</returns>
-        private bool m_DoNewPlurk()
+        private bool m_DoNewPlurk(myPlurkMessage item)
         {
-            if (!m_LoginPlurk())
+            if (!plurk.isLogged)
             {
-                return false;
+                if (!m_LoginPlurk())
+                {
+                    m_Output("ERROR: Failed to log in as " + m_textUsername.Text + ".");
+                    return false;
+                }
+                m_Output("Now logged on as " + m_textUsername.Text + ".");
             }
-            m_Output("Now logged on as " + m_textUsername.Text + ".");
 
             // compose limit-to string
             string limit_to = "";
-            string[] tokens;
-            for (int i = 0; i < m_chklstFriendList.Items.Count; i++)
+            for (int i = 0; i < item.limit_to.Count; i++)
             {
-                if (m_chklstFriendList.GetItemChecked(i))
+                if (i == 0)
                 {
-                    if (limit_to == "")
-                    {
-                        limit_to = "[";
-                    }
-                    tokens = Regex.Split(m_chklstFriendList.Items[i].ToString(), " \\(");
-                    limit_to += (tokens[0] + ",");
+                    limit_to = "[";
                 }
+                else
+                {
+                    limit_to += ',';
+                }
+                limit_to += item.limit_to[i].ToString();
             }
             if (limit_to != "")
             {
-                limit_to = limit_to.Remove(limit_to.Length - 1);
                 limit_to += ']';
             }
 
 
             // Post new Plurk message
-            if (plurk.addMessage("en", "says", m_textContent.Text, m_cbAllowComments.Checked, limit_to))
+            if (plurk.addMessage(item.language, item.qualifier, item.content, item.allow_comments, limit_to))
             {
                 m_Output("Successfully added a new Plurk message!");
             }
@@ -138,7 +161,7 @@ namespace KarmaBooster__Windows_Form_version_
 
             return true;
         }
-        
+
         /// <summary>
         /// Print a piece of message in output field.
         /// </summary>
@@ -160,28 +183,7 @@ namespace KarmaBooster__Windows_Form_version_
                 return false;
             }
 
-            return plurk.Login( m_textUsername.Text, m_textPassword.Text);
-        }
-
-        /// <summary>
-        /// Scheduling checkbox event handler.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void m_cbScheduling_CheckedChanged(object sender, EventArgs e)
-        {
-            if (m_cbScheduling.Checked)
-            {
-                m_textHour.Enabled = true;
-                m_textMinute.Enabled = true;
-                m_textSecond.Enabled = true;
-            }
-            else
-            {
-                m_textHour.Enabled = false;
-                m_textMinute.Enabled = false;
-                m_textSecond.Enabled = false;
-            }
+            return plurk.Login(m_textUsername.Text, m_textPassword.Text);
         }
 
         /// <summary>
@@ -206,22 +208,13 @@ namespace KarmaBooster__Windows_Form_version_
 
             if (plurk.myFriends != null)
             {
-                m_chklstFriendList.Items.Clear();
-                m_comboUid.Items.Clear();
-                m_comboUid.Items.Add("(me)");
-                m_comboUid.SelectedIndex = 0;
+                m_friendList.Clear();
 
-                SortedDictionary<int, PlurkFriend> sorted_friend_array = new SortedDictionary<int, PlurkFriend>();
+                m_friendList.Add(plurk.uid, "(me)");
 
                 foreach (PlurkApi.PlurkFriend friend in plurk.myFriends)
                 {
-                    sorted_friend_array.Add(friend.uid, friend);
-                }
-
-                foreach ( PlurkFriend friend in sorted_friend_array.Values)
-                {
-                    m_chklstFriendList.Items.Add(friend.uid.ToString() + " (" + friend.nick_name + ")");
-                    m_comboUid.Items.Add(friend.full_name);
+                    m_friendList.Add(friend.uid, friend.nick_name);
                 }
             }
             else
@@ -239,45 +232,40 @@ namespace KarmaBooster__Windows_Form_version_
         {
             if (myTimer.Enabled == false)
             {
-                timerInterval = 0;
-                try
+                bool bUseTimer = false;
+                ActionItem action;
+                for (int i = m_ActionList.Count - 1; i >= 0; i--)
                 {
-                    if (m_textHour.Text != "")
-                        timerInterval += System.Int32.Parse(m_textHour.Text);
-                    timerInterval *= 60;
-                    if (m_textMinute.Text != "")
-                        timerInterval += System.Int32.Parse(m_textMinute.Text);
-                    timerInterval *= 60;
-                    if (m_textSecond.Text != "")
-                        timerInterval += System.Int32.Parse(m_textSecond.Text);
-                    timerInterval *= 1000;
-                }
-                catch
-                {
-                    m_Output("ERROR: Time format error.");
-                    return;
+                    action = m_ActionList[i];
+                    switch (action.Type)
+                    {
+                        case ActionType.Immediate:
+                            m_DoNewPlurk(action.Message);
+                            m_ActionList.RemoveAt(i);
+                            m_UpdateActionListUi();
+                            break;
+
+                        case ActionType.OneShot:
+                            action.RemainedMinutes = action.Hours * 60 + action.Minutes;
+                            bUseTimer = true;
+                            break;
+
+                        case ActionType.Periodic:
+                            bUseTimer = true;
+                            break;
+                    }
                 }
 
-                // Prepare for the messages to plurk.
-                m_messagesToPlurk = m_textContent.Text.Split( new char[]{'\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
-                if (m_messagesToPlurk.Length == 0)
+                if (bUseTimer)
                 {
-                    m_Output("ERROR: Content field cannot be empty.");
+                    timerInterval = 60 * 1000;  // 1 minute
+                    myTimer.Interval = timerInterval;
+                    myTimer.Start();
+                    m_btnAction.Text = "Stop";
                 }
                 else
                 {
-                    m_messageIndex = 0;
-
-                    if (timerInterval == 0)
-                    {
-                        m_DoNewPlurk();
-                    }
-                    else
-                    {
-                        myTimer.Interval = timerInterval;
-                        myTimer.Start();
-                        m_btnAction.Text = "Stop";
-                    }
+                    timerInterval = 0;
                 }
             }
             else
@@ -318,6 +306,11 @@ namespace KarmaBooster__Windows_Form_version_
 
         #endregion
 
+        /// <summary>
+        /// Show About box when clicked on the about link.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AboutBox about = new AboutBox();
@@ -356,15 +349,171 @@ namespace KarmaBooster__Windows_Form_version_
                 {
                     m_listMessages.Items.Add(m_messagesInList[i].content_raw.Substring(0, 20) + "...");
                 }
-                /*
-                foreach (PlurkMessage msg in m_messagesInList)
-                {
-                    if (msg.owner_id == _uid)
-                        //m_listMessages.Items.Add(msg.content_raw.Substring(0, 10) + "...");
-                        m_listMessages.Items.Add(msg.posted);
-                }
-                */
             }
         }
+
+        private void m_btnAdd_Click(object sender, EventArgs e)
+        {
+            //if (plurk.isLogged)
+            if (true)
+            {
+                AddNewPlurk dlg = new AddNewPlurk();
+
+                dlg.friendList = m_friendList;
+                dlg.languageList = m_languageTable;
+                dlg.qulifireList = m_qualifierTable;
+
+                dlg.UpdateUi();
+                dlg.ShowDialog(this);
+
+                if (dlg.DialogResult == DialogResult.OK)
+                {
+                    m_ActionList.Add(dlg.actionResult);
+                    m_UpdateActionListUi();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please login first.");
+            }
+        }
+
+        private void m_UpdateActionListUi()
+        {
+            string strTemp;
+
+            m_listNewPlurks.Items.Clear();
+
+            foreach (ActionItem item in m_ActionList)
+            {
+                ListViewItem viewItem = new ListViewItem();
+                // Post time
+                switch (item.Type)
+                {
+                    case ActionType.Immediate:
+                        viewItem.Text = "(Immediate)";
+                        break;
+
+                    case ActionType.OneShot:
+                        viewItem.Text = item.ExactTime.ToShortTimeString();
+                        break;
+
+                    case ActionType.Periodic:
+                        viewItem.Text = "[" + item.RemainedMinutes.ToString() + "/" + (item.Hours*60+item.Minutes).ToString() + "min]";
+                        break;
+                }
+
+                // Allow comments
+                viewItem.SubItems.Add( item.Message.allow_comments?"Yes":"No");
+
+                // Limit-to
+                if (item.Message.limit_to.Count > 0)
+                {
+                    strTemp = "[";
+                    foreach (int i in item.Message.limit_to)
+                    {
+                        if (strTemp != "[")
+                        {
+                            strTemp += ',';
+                        }
+                        strTemp += i.ToString();
+                    }
+                    strTemp += ']';
+
+                    viewItem.SubItems.Add(strTemp);
+                }
+                else
+                {
+                    viewItem.SubItems.Add("--");
+                }
+
+                // Language
+                viewItem.SubItems.Add(item.Message.language);
+
+                // Qualifier
+                viewItem.SubItems.Add(item.Message.qualifier);
+
+                // Content
+                viewItem.SubItems.Add(item.Message.content);
+
+
+
+                m_listNewPlurks.Items.Add(viewItem);
+            }
+        }
+
+        private void m_listNewPlurks_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            bool enable = false;
+            foreach ( ListViewItem item in m_listNewPlurks.Items)
+            {
+                if (item.Selected)
+                {
+                    enable = true;
+                    break;
+                }
+            }
+
+            m_btnDelete.Enabled = enable;
+        }
+
+        private void m_btnDelete_Click(object sender, EventArgs e)
+        {
+            ListViewItem item;
+            for (int i = m_listNewPlurks.Items.Count - 1; i >= 0; i--)
+            {
+                if (m_listNewPlurks.Items[i].Selected)
+                {
+                    m_ActionList.RemoveAt(i);
+                }
+            }
+
+            if (myTimer.Enabled && m_listNewPlurks.Items.Count == 0)
+            {
+                myTimer.Stop();
+                m_btnAction.Text = "Go";
+            }
+
+            m_UpdateActionListUi();
+        }
+
     }
+
+    public class myPlurkMessage
+    {
+        public string language;
+        public string qualifier;
+        public List<int> limit_to;
+        public string content;
+        public bool allow_comments;
+
+        public myPlurkMessage()
+        {
+            limit_to = new List<int>();
+        }
+    }
+
+    public enum ActionType
+    {
+        None,
+        Immediate,
+        OneShot,
+        Periodic
+    }
+
+    public class ActionItem
+    {
+        public ActionType Type;
+        public DateTime ExactTime;
+        public int Hours;
+        public int Minutes;
+        public int RemainedMinutes;
+        public myPlurkMessage Message;
+
+        public ActionItem()
+        {
+            Message = new myPlurkMessage();
+        }
+    }
+
 }
