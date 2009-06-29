@@ -48,7 +48,7 @@ namespace KarmaBooster__Windows_Form_version_
             { "English", "en"},
             { "Traditional Chinese", "tr_ch"},
             { "French", "fr"},
-            { "Japanese", "jp"}
+            { "Japanese", "ja"}
         };
 
         SortedDictionary<int, string> m_friendList = new SortedDictionary<int, string>();

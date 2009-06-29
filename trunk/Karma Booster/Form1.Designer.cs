@@ -450,6 +450,7 @@
             this.Controls.Add(this.m_btnClose);
             this.Controls.Add(this.m_btnAction);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(508, 565);
             this.Name = "Form1";

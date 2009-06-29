@@ -100,7 +100,7 @@ namespace KarmaBooster__Windows_Form_version_
                 actionResult.Message.language = "en";
 
             // Get qualifier string
-            if (qulifireList.TryGetValue(m_cbQualifier.SelectedText.ToString(), out value))
+            if (qulifireList.TryGetValue(m_cbQualifier.SelectedItem.ToString(), out value))
                 actionResult.Message.qualifier = value;
             else
                 actionResult.Message.qualifier = "says";
