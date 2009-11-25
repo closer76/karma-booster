@@ -7,6 +7,9 @@
 
 = 內容 =
 
+==Version 0.6.0.2==
+  # Added Chinese (Taiwan) interface.
+
 ==Version 0.6.0.1==
   # Fixed qualifier incorrect problem.
   # Fixed system icon incorrect problem.
