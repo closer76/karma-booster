@@ -7,6 +7,9 @@
 
 = 內容 =
 
+==Version 0.6.1.1 (Jan 15, 2010)==
+  # Corrected some output messages.
+
 ==Version 0.6.1.0 (Jan 15, 2010)==
   # [Bug-fix] Failed to add new plurk when "limit_to" field is set.
   # Partially revised Plurk API according to Official Plurk API.
