@@ -5,7 +5,7 @@
   # 若您想在 Windows 98, Windows Me, Windows 2000 或 Windows XP 中使用 Karma Booster，請先安裝「Microsoft .NET Framework 2.0 版可轉散發套件」。您可以從 [http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5&DisplayLang=zh-tw Microsoft 的網站上]下載這個套件。（Windows XP 64-bit 版的使用者，請安裝 [http://www.microsoft.com/downloads/details.aspx?familyid=B44A0000-ACF8-4FA1-AFFB-40E78D788B00&displaylang=zh-tw x64 版]的套件。）
   # 請在[http://code.google.com/p/karma-booster/downloads/list 這裡]下載最新版的 Karma Booster。
   # *0.6.1.0 及之後的版本：*
-    # 請將整個解壓縮得到的資料夾放在適當的位置（例如：C:\KarmaBooster_0.6.1.0\），然後直接執行 "Karma Booster.exe" 即可。
+    # 請將整個解壓縮得到的資料夾放在適當的位置（例如：C:\KarmaBooster`_`0.6.1.0\），然後直接執行 "Karma Booster.exe" 即可。
     # 您可以視情況拉一個捷徑到桌面上，方便執行。
   # *0.6.0.3 及之前的版本：*
     # 下載後將檔案解壓縮至某個資料夾，然後執行 "Setup.exe"。
