@@ -337,7 +337,7 @@ namespace PlurkApi
         public PlurkFriends myFriends { get; set; }
 
 #if (OFFICIAL_API)
-        private int friends_count;
+        public int friends_count { get; private set; }
         private string apikey;
         public const string API_URL = "http://www.plurk.com/API";
 

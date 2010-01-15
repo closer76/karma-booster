@@ -225,9 +225,14 @@ namespace KarmaBooster__Windows_Form_version_
             if (!plurk.isLogged)
             {
                 if (m_LoginPlurk())
-                    m_Output("Successfully logged in as " + m_textUsername + ".");
+                {
+                    m_Output("Successfully logged in as " + m_textUsername.Text + ".");
+                    m_Output("friends_count = " + plurk.friends_count.ToString());
+                }
                 else
+                {
                     m_Output("ERROR: Log in failed!");
+                }
             }
 
             if (plurk.myFriends != null)
