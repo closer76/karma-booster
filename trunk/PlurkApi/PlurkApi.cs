@@ -1,3 +1,5 @@
+#define OFFICIAL_API
+
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -146,6 +148,81 @@ namespace PlurkApi
 
     public class PlurkFriend
     {
+#if (OFFICIAL_API)
+        public string display_name;
+        public int uid;
+        public string relationship;
+        public bool settings;
+        public string nick_name;
+        public int has_profile_image;
+        public int following_im;
+        public string location;
+        public int following_tl;
+        public string date_of_birth;
+        public int avatar;
+        public int gender;
+        public bool following;
+        public string timezone;
+        public int recruited;
+        public int id;
+        public float karma;
+
+        public PlurkFriend(JsonObject jsonObject)
+        {
+            try { this.display_name = ((JsonString)jsonObject["display_name"]).Value; }
+            catch { this.display_name = ""; }
+
+            try { this.uid = Convert.ToInt32(((JsonNumber)jsonObject["uid"]).Value); }
+            catch { this.uid = 0; }
+
+            try { this.relationship = ((JsonString)jsonObject["relationship"]).Value; }
+            catch { this.relationship = ""; }
+
+            try { this.settings = ((JsonBoolean)jsonObject["settings"]).Value; }
+            catch { this.settings = false; }
+
+            try { this.nick_name = ((JsonString)jsonObject["nick_name"]).Value; }
+            catch { this.nick_name = ""; }
+
+            try { this.has_profile_image = Convert.ToInt32(((JsonNumber)jsonObject["has_profile_image"]).Value); }
+            catch { this.has_profile_image = 0; }
+
+            try { this.following_im = Convert.ToInt32(((JsonNumber)jsonObject["following_im"]).Value); }
+            catch { this.following_im = 0; }
+
+            try { this.location = ((JsonString)jsonObject["location"]).Value; }
+            catch { this.location = ""; }
+
+            try { this.following_tl = Convert.ToInt32(((JsonNumber)jsonObject["following_tl"]).Value); }
+            catch { this.following_tl = 0; }
+
+            try { this.date_of_birth = ((JsonString)jsonObject["date_of_birth"]).Value; }
+            catch { this.date_of_birth = ""; }
+
+            try { this.avatar = Convert.ToInt32(((JsonNumber)jsonObject["avatar"]).Value); }
+            catch { this.avatar = 0; }
+
+            try { this.gender = Convert.ToInt32(((JsonNumber)jsonObject["gender"]).Value); }
+            catch { this.gender = 0; }
+
+            try { this.following = ((JsonBoolean)jsonObject["following"]).Value; }
+            catch { this.following = false; }
+
+            try { this.timezone = ((JsonString)jsonObject["timezone"]).Value; }
+            catch { this.timezone = ""; }
+            
+            try { this.recruited = Convert.ToInt32(((JsonNumber)jsonObject["recruited"]).Value); }
+            catch { this.recruited = 0; }
+
+            try { this.id = Convert.ToInt32(((JsonNumber)jsonObject["id"]).Value); }
+            catch { this.id = 0; }
+
+            try { this.karma = Convert.ToSingle(((JsonNumber)jsonObject["karma"]).Value); }
+            catch { this.karma = 0.0f; }
+        }
+    }
+
+#else
         public int only_fan { get; set; }
         public string display_name { get; set; }
         public int uid { get; set; }
@@ -172,7 +249,6 @@ namespace PlurkApi
 
             using (JsonParser parser = new JsonParser(new StringReader(jsonString), true))
                 jsonObject = parser.ParseObject();
-
             foreach (string str in jsonObject.Keys)
             {
                 try
@@ -185,7 +261,6 @@ namespace PlurkApi
                     continue;
                 }
             }
-
             try { this.only_fan = Convert.ToInt32(((JsonNumber)jsonObject["only_fan"]).Value); }
             catch { this.only_fan = 0; }
 
@@ -242,6 +317,9 @@ namespace PlurkApi
         }
     }
 
+#endif
+
+
     public class PlurkFriends : Collection<PlurkFriend> 
     {
  
@@ -258,11 +336,24 @@ namespace PlurkApi
         public Boolean isLogged { get; set; }
         public PlurkFriends myFriends { get; set; }
 
-        public PlurkApi() 
+#if (OFFICIAL_API)
+        private int friends_count;
+        private string apikey;
+        public const string API_URL = "http://www.plurk.com/API";
+
+        public PlurkApi(string _apiKey) 
         {   
             web = new WebUtil();
             this.myFriends = new PlurkFriends();
+            apikey = _apiKey;
         }
+#else
+        public PlurkApi()
+        {
+            web = new WebUtil();
+            this.myFriends = new PlurkFriends();
+        }
+#endif
 
         /// <summary>
         /// Login to plurk
@@ -273,10 +364,22 @@ namespace PlurkApi
         public bool Login(string username, string password) 
         {
             string data;
+            JsonObject jsonObject;
+
             this.username = username;
             this.password = password;
+#if (OFFICIAL_API)
+            data = web.GetPage(API_URL + "/Users/login?" +
+                                "api_key=" + apikey + "&" +
+                                "username=" + this.username + "&" +
+                                "password=" + this.password,
+                                null,
+                                ref cookie,
+                                true);
+#else
             data = web.GetPage(string.Format("http://www.plurk.com/Users/login?redirect_page=main&nick_name={0}&password={1}", this.username, this.password),
                                 null, ref cookie, false);
+#endif
             if (cookie == null)
             {
                 this.isLogged = false;
@@ -284,9 +387,26 @@ namespace PlurkApi
             }
             else 
             {
-                data = web.GetPage("http://www.plurk.com/user/" + this.username, null, ref cookie,true);
+#if (OFFICIAL_API)
+                using (JsonParser parser = new JsonParser(new StringReader(data), true))
+                    jsonObject = parser.ParseObject();
+
+                try
+                {
+                    this.uid = Convert.ToInt32(((JsonNumber)((JsonObject)jsonObject["user_info"])["uid"]).Value);
+                    this.friends_count = Convert.ToInt32(((JsonNumber)jsonObject["friends_count"]).Value);
+                }
+                catch
+                {
+                    this.uid = 0;
+                    this.friends_count = 0;
+                }
+#else
+                data = web.GetPage( "http://www.plurk.com/user/" + this.username, null, ref cookie,true);
                 if (data == "") return false;
                 this.uid = Convert.ToInt32(new Regex("var GLOBAL = \\{.*\"uid\": ([\\d]+),.*\\}").Matches(data)[0].Groups[1].Value);
+#endif
+
                 this.myFriends = this.getFriends(this.uid);
             }
             this.isLogged = true;
@@ -300,9 +420,36 @@ namespace PlurkApi
         /// <returns>A friends collection</returns>
         public PlurkFriends getFriends(int uid) 
         {
-            string jsonString = "";
             PlurkFriends friends = new PlurkFriends();
             string data = "";
+
+#if (OFFICIAL_API)
+            int offset;
+            JsonArray jsonObject;
+
+            for (offset = 0; offset < this.friends_count; offset += 10)
+            {
+                data = web.GetPage(API_URL + "/FriendsFans/getFriendsByOffset?" +
+                                   "api_key=" + apikey + "&" +
+                                   "user_id=" + this.uid.ToString() +
+                                   (offset != 0 ? "&offset=" + offset.ToString() : ""),
+                                   null,
+                                   ref cookie,
+                                   true);
+                if (data == "" || data == "[]")
+                    break;
+
+                using (JsonParser parser = new JsonParser(new StringReader(data), true))
+                    jsonObject = parser.ParseArray();
+
+                foreach (NetServ.Net.Json.IJsonType item in jsonObject)
+                {
+                    friends.Add(new PlurkFriend((JsonObject)item));
+                }
+            }
+#else
+            string jsonString = "";
+
 //            data = web.GetPage("http://www.plurk.com/Users/getFriends?user_id=" + uid.ToString(), null, ref cookie, true);
             data = web.GetPage("http://www.plurk.com/Users/getCompletion?user_id=" + uid.ToString(), null, ref cookie, true);
             if (data == "") return null;
@@ -329,6 +476,7 @@ namespace PlurkApi
                 }
                 friends.Add(new PlurkFriend(jsonString));
             }
+#endif
             return friends;
         }
 
@@ -338,23 +486,51 @@ namespace PlurkApi
         /// <param name="lang">The plurk language</param>
         /// <param name="qualifier">The plurk qualifier</param>
         /// <param name="content">The content of plurk message to be posted</param>
-        /// <param name="alowComments">true if this plurk message allows comments, false otherwise</param>
+        /// <param name="allowComments">true if this plurk message allows comments, false otherwise</param>
         /// <param name="limited_to">Limite this plurk message to some friends. Format: [uid,uid,uid]. Otherwise set with ""</param>
         /// <returns>true if it was posted, otherwise false</returns>
-        public bool addMessage(string lang, string qualifier, string content, bool alowComments, string limited_to)
+        public bool addMessage(string lang, string qualifier, string content, bool allowComments, string limited_to)
         {
             string query = "";
             string data = "";
+#if (OFFICIAL_API)
+            query = string.Format("api_key={0}&content={1}&qualifier={2}&lang={3}&no_comments={4}",
+                                    this.apikey,
+                                    HttpUtility.UrlEncode(content),
+                                    qualifier,
+                                    lang,
+                                    allowComments ? "2" : "1");
+#else
             string error_match = "";
-
             query = string.Format("uid={0}&posted={1}&qualifier={2}&content={3}&lang={4}&no_comments={5}",
                                     this.uid,
                                     HttpUtility.UrlEncode(DateTime.Now.ToUniversalTime().ToString("s")), qualifier, HttpUtility.UrlEncode(content), lang,
-                                    !alowComments ? "1" : "0");
+#endif
             if (limited_to != "")
             {
                 query += "&limited_to=" + HttpUtility.UrlEncode(limited_to);
             }
+#if (OFFICIAL_API)
+            data = web.GetPage(API_URL + "/Timeline/plurkAdd?" + query,
+                                null,
+                                ref cookie,
+                                true);
+
+            JsonObject jsonObject;
+            using (JsonParser parser = new JsonParser(new StringReader(data), true))
+                jsonObject = parser.ParseObject();
+
+            try
+            {
+                string error_message = ((JsonString)(jsonObject["error_text"])).Value;
+            }
+            catch
+            {
+                return true;
+            }
+
+            return false;
+#else
             data = web.GetPage("http://www.plurk.com/TimeLine/addPlurk?" + query, null, ref cookie, true);
             if (data.IndexOf("/anti-flood/") != -1 || cookie == null)
                 return false;
@@ -371,6 +547,7 @@ namespace PlurkApi
                 return false;
             }
             return true;
+#endif
         }
 
         /// <summary>
@@ -380,7 +557,7 @@ namespace PlurkApi
         public Collection<Int32> getFriendRequests() 
         {
             string data = "";
-            Regex reg;
+            //Regex reg;
             MatchCollection uidRequests;
             Collection<Int32> uidRequestsCollection = new Collection<Int32>();
 

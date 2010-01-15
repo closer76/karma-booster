@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*  
+ * Form1.cs
+ * 
+ * This file is part of Karma Booster.
+ * 
+ * Karma Booster is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *  
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +30,8 @@ namespace KarmaBooster__Windows_Form_version_
 {
     public partial class Form1 : Form
     {
-        private PlurkApi.PlurkApi plurk = new PlurkApi.PlurkApi();
+        /* To obtain your own Plurk API Key, please visit http://www.plurk.com/API . */
+        private PlurkApi.PlurkApi plurk = new PlurkApi.PlurkApi("yRcSemzOzEGQbJtPcnPnDKGW7jXnGVLF");
         private PlurkMessages m_messagesInList;
 
         private System.Windows.Forms.Timer myTimer = new System.Windows.Forms.Timer();
@@ -204,7 +223,12 @@ namespace KarmaBooster__Windows_Form_version_
         private void m_btnLoadFriends_Click(object sender, EventArgs e)
         {
             if (!plurk.isLogged)
-                m_LoginPlurk();
+            {
+                if (m_LoginPlurk())
+                    m_Output("Successfully logged in as " + m_textUsername + ".");
+                else
+                    m_Output("ERROR: Log in failed!");
+            }
 
             if (plurk.myFriends != null)
             {
@@ -329,7 +353,7 @@ namespace KarmaBooster__Windows_Form_version_
                 string full_name = m_comboUid.SelectedItem.ToString();
                 foreach (PlurkFriend friend in plurk.myFriends)
                 {
-                    if (friend.full_name == full_name)
+                    if (friend.display_name == full_name)
                     {
                         _uid = friend.uid;
                         break;
@@ -459,7 +483,7 @@ namespace KarmaBooster__Windows_Form_version_
 
         private void m_btnDelete_Click(object sender, EventArgs e)
         {
-            ListViewItem item;
+            //ListViewItem item;
             for (int i = m_listNewPlurks.Items.Count - 1; i >= 0; i--)
             {
                 if (m_listNewPlurks.Items[i].Selected)

@@ -1,4 +1,22 @@
-﻿namespace KarmaBooster__Windows_Form_version_
+﻿/*  
+ * AddNewPlurk.Designer.cs
+ * 
+ * This file is part of Karma Booster.
+ * 
+ * Karma Booster is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *  
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+namespace KarmaBooster__Windows_Form_version_
 {
     partial class AddNewPlurk
     {
@@ -28,6 +46,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddNewPlurk));
             this.m_cbLanguage = new System.Windows.Forms.ComboBox();
             this.m_cbQualifier = new System.Windows.Forms.ComboBox();
             this.m_textContent = new System.Windows.Forms.TextBox();
@@ -57,30 +76,39 @@
             // 
             // m_cbLanguage
             // 
+            this.m_cbLanguage.AccessibleDescription = null;
+            this.m_cbLanguage.AccessibleName = null;
+            resources.ApplyResources(this.m_cbLanguage, "m_cbLanguage");
+            this.m_cbLanguage.BackgroundImage = null;
+            this.m_cbLanguage.Font = null;
             this.m_cbLanguage.FormattingEnabled = true;
-            this.m_cbLanguage.Location = new System.Drawing.Point(81, 20);
             this.m_cbLanguage.Name = "m_cbLanguage";
-            this.m_cbLanguage.Size = new System.Drawing.Size(160, 20);
-            this.m_cbLanguage.TabIndex = 0;
             // 
             // m_cbQualifier
             // 
+            this.m_cbQualifier.AccessibleDescription = null;
+            this.m_cbQualifier.AccessibleName = null;
+            resources.ApplyResources(this.m_cbQualifier, "m_cbQualifier");
+            this.m_cbQualifier.BackgroundImage = null;
+            this.m_cbQualifier.Font = null;
             this.m_cbQualifier.FormattingEnabled = true;
-            this.m_cbQualifier.Location = new System.Drawing.Point(81, 46);
             this.m_cbQualifier.Name = "m_cbQualifier";
-            this.m_cbQualifier.Size = new System.Drawing.Size(160, 20);
-            this.m_cbQualifier.TabIndex = 1;
             // 
             // m_textContent
             // 
-            this.m_textContent.Location = new System.Drawing.Point(81, 72);
-            this.m_textContent.Multiline = true;
+            this.m_textContent.AccessibleDescription = null;
+            this.m_textContent.AccessibleName = null;
+            resources.ApplyResources(this.m_textContent, "m_textContent");
+            this.m_textContent.BackgroundImage = null;
+            this.m_textContent.Font = null;
             this.m_textContent.Name = "m_textContent";
-            this.m_textContent.Size = new System.Drawing.Size(158, 123);
-            this.m_textContent.TabIndex = 2;
             // 
             // groupBox1
             // 
+            this.groupBox1.AccessibleDescription = null;
+            this.groupBox1.AccessibleName = null;
+            resources.ApplyResources(this.groupBox1, "groupBox1");
+            this.groupBox1.BackgroundImage = null;
             this.groupBox1.Controls.Add(this.m_rbImmediate);
             this.groupBox1.Controls.Add(this.m_timePicker);
             this.groupBox1.Controls.Add(this.label6);
@@ -91,202 +119,204 @@
             this.groupBox1.Controls.Add(this.m_datePicker);
             this.groupBox1.Controls.Add(this.m_rbRepeat);
             this.groupBox1.Controls.Add(this.m_rbOneTime);
-            this.groupBox1.Location = new System.Drawing.Point(12, 201);
+            this.groupBox1.Font = null;
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(258, 147);
-            this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Scheduling Options";
             // 
             // m_rbImmediate
             // 
-            this.m_rbImmediate.AutoSize = true;
-            this.m_rbImmediate.Location = new System.Drawing.Point(6, 115);
+            this.m_rbImmediate.AccessibleDescription = null;
+            this.m_rbImmediate.AccessibleName = null;
+            resources.ApplyResources(this.m_rbImmediate, "m_rbImmediate");
+            this.m_rbImmediate.BackgroundImage = null;
+            this.m_rbImmediate.Font = null;
             this.m_rbImmediate.Name = "m_rbImmediate";
-            this.m_rbImmediate.Size = new System.Drawing.Size(178, 16);
-            this.m_rbImmediate.TabIndex = 11;
             this.m_rbImmediate.TabStop = true;
-            this.m_rbImmediate.Text = "Post immediately (no scheduling)";
             this.m_rbImmediate.UseVisualStyleBackColor = true;
             // 
             // m_timePicker
             // 
-            this.m_timePicker.CustomFormat = "HH:mm";
+            this.m_timePicker.AccessibleDescription = null;
+            this.m_timePicker.AccessibleName = null;
+            resources.ApplyResources(this.m_timePicker, "m_timePicker");
+            this.m_timePicker.BackgroundImage = null;
+            this.m_timePicker.CalendarFont = null;
+            this.m_timePicker.Font = null;
             this.m_timePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.m_timePicker.Location = new System.Drawing.Point(156, 43);
             this.m_timePicker.Name = "m_timePicker";
             this.m_timePicker.ShowUpDown = true;
-            this.m_timePicker.Size = new System.Drawing.Size(59, 22);
-            this.m_timePicker.TabIndex = 10;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(206, 90);
+            this.label6.AccessibleDescription = null;
+            this.label6.AccessibleName = null;
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Font = null;
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 12);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "minute(s)";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(105, 90);
+            this.label5.AccessibleDescription = null;
+            this.label5.AccessibleName = null;
+            resources.ApplyResources(this.label5, "label5");
+            this.label5.Font = null;
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 12);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "hour(s)";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(18, 90);
+            this.label4.AccessibleDescription = null;
+            this.label4.AccessibleName = null;
+            resources.ApplyResources(this.label4, "label4");
+            this.label4.Font = null;
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(33, 12);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Every";
             // 
             // m_textMinutes
             // 
-            this.m_textMinutes.Location = new System.Drawing.Point(150, 87);
+            this.m_textMinutes.AccessibleDescription = null;
+            this.m_textMinutes.AccessibleName = null;
+            resources.ApplyResources(this.m_textMinutes, "m_textMinutes");
+            this.m_textMinutes.BackgroundImage = null;
+            this.m_textMinutes.Font = null;
             this.m_textMinutes.Name = "m_textMinutes";
-            this.m_textMinutes.Size = new System.Drawing.Size(50, 22);
-            this.m_textMinutes.TabIndex = 4;
             // 
             // m_textHours
             // 
-            this.m_textHours.Location = new System.Drawing.Point(57, 87);
+            this.m_textHours.AccessibleDescription = null;
+            this.m_textHours.AccessibleName = null;
+            resources.ApplyResources(this.m_textHours, "m_textHours");
+            this.m_textHours.BackgroundImage = null;
+            this.m_textHours.Font = null;
             this.m_textHours.Name = "m_textHours";
-            this.m_textHours.Size = new System.Drawing.Size(43, 22);
-            this.m_textHours.TabIndex = 3;
             // 
             // m_datePicker
             // 
-            this.m_datePicker.Location = new System.Drawing.Point(20, 43);
+            this.m_datePicker.AccessibleDescription = null;
+            this.m_datePicker.AccessibleName = null;
+            resources.ApplyResources(this.m_datePicker, "m_datePicker");
+            this.m_datePicker.BackgroundImage = null;
+            this.m_datePicker.CalendarFont = null;
+            this.m_datePicker.CustomFormat = null;
+            this.m_datePicker.Font = null;
             this.m_datePicker.Name = "m_datePicker";
-            this.m_datePicker.Size = new System.Drawing.Size(124, 22);
-            this.m_datePicker.TabIndex = 2;
             // 
             // m_rbRepeat
             // 
-            this.m_rbRepeat.AutoSize = true;
-            this.m_rbRepeat.Location = new System.Drawing.Point(6, 71);
+            this.m_rbRepeat.AccessibleDescription = null;
+            this.m_rbRepeat.AccessibleName = null;
+            resources.ApplyResources(this.m_rbRepeat, "m_rbRepeat");
+            this.m_rbRepeat.BackgroundImage = null;
+            this.m_rbRepeat.Font = null;
             this.m_rbRepeat.Name = "m_rbRepeat";
-            this.m_rbRepeat.Size = new System.Drawing.Size(55, 16);
-            this.m_rbRepeat.TabIndex = 1;
             this.m_rbRepeat.TabStop = true;
-            this.m_rbRepeat.Text = "Repeat";
             this.m_rbRepeat.UseVisualStyleBackColor = true;
             // 
             // m_rbOneTime
             // 
-            this.m_rbOneTime.AutoSize = true;
-            this.m_rbOneTime.Location = new System.Drawing.Point(6, 21);
+            this.m_rbOneTime.AccessibleDescription = null;
+            this.m_rbOneTime.AccessibleName = null;
+            resources.ApplyResources(this.m_rbOneTime, "m_rbOneTime");
+            this.m_rbOneTime.BackgroundImage = null;
+            this.m_rbOneTime.Font = null;
             this.m_rbOneTime.Name = "m_rbOneTime";
-            this.m_rbOneTime.Size = new System.Drawing.Size(70, 16);
-            this.m_rbOneTime.TabIndex = 0;
             this.m_rbOneTime.TabStop = true;
-            this.m_rbOneTime.Text = "One-Time";
             this.m_rbOneTime.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 23);
+            this.label1.AccessibleDescription = null;
+            this.label1.AccessibleName = null;
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Font = null;
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Lanuage:";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 46);
+            this.label2.AccessibleDescription = null;
+            this.label2.AccessibleName = null;
+            resources.ApplyResources(this.label2, "label2");
+            this.label2.Font = null;
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 12);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Qualifier:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 72);
+            this.label3.AccessibleDescription = null;
+            this.label3.AccessibleName = null;
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Font = null;
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 12);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Content:";
             // 
             // m_chkboxAllowComments
             // 
-            this.m_chkboxAllowComments.AutoSize = true;
-            this.m_chkboxAllowComments.Location = new System.Drawing.Point(264, 22);
+            this.m_chkboxAllowComments.AccessibleDescription = null;
+            this.m_chkboxAllowComments.AccessibleName = null;
+            resources.ApplyResources(this.m_chkboxAllowComments, "m_chkboxAllowComments");
+            this.m_chkboxAllowComments.BackgroundImage = null;
+            this.m_chkboxAllowComments.Font = null;
             this.m_chkboxAllowComments.Name = "m_chkboxAllowComments";
-            this.m_chkboxAllowComments.Size = new System.Drawing.Size(105, 16);
-            this.m_chkboxAllowComments.TabIndex = 7;
-            this.m_chkboxAllowComments.Text = "Allow Comments";
             this.m_chkboxAllowComments.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(262, 54);
+            this.label7.AccessibleDescription = null;
+            this.label7.AccessibleName = null;
+            resources.ApplyResources(this.label7, "label7");
+            this.label7.Font = null;
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(82, 12);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Private Message:";
             // 
             // m_btnAdd
             // 
+            this.m_btnAdd.AccessibleDescription = null;
+            this.m_btnAdd.AccessibleName = null;
+            resources.ApplyResources(this.m_btnAdd, "m_btnAdd");
+            this.m_btnAdd.BackgroundImage = null;
             this.m_btnAdd.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.m_btnAdd.Location = new System.Drawing.Point(102, 354);
+            this.m_btnAdd.Font = null;
             this.m_btnAdd.Name = "m_btnAdd";
-            this.m_btnAdd.Size = new System.Drawing.Size(81, 28);
-            this.m_btnAdd.TabIndex = 10;
-            this.m_btnAdd.Text = "Add";
             this.m_btnAdd.UseVisualStyleBackColor = true;
             this.m_btnAdd.Click += new System.EventHandler(this.m_btnAdd_Click);
             // 
             // m_btnCancel
             // 
+            this.m_btnCancel.AccessibleDescription = null;
+            this.m_btnCancel.AccessibleName = null;
+            resources.ApplyResources(this.m_btnCancel, "m_btnCancel");
+            this.m_btnCancel.BackgroundImage = null;
             this.m_btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.m_btnCancel.Location = new System.Drawing.Point(263, 354);
+            this.m_btnCancel.Font = null;
             this.m_btnCancel.Name = "m_btnCancel";
-            this.m_btnCancel.Size = new System.Drawing.Size(81, 28);
-            this.m_btnCancel.TabIndex = 11;
-            this.m_btnCancel.Text = "Cancel";
             this.m_btnCancel.UseVisualStyleBackColor = true;
             // 
             // m_listviewLimitTo
             // 
+            this.m_listviewLimitTo.AccessibleDescription = null;
+            this.m_listviewLimitTo.AccessibleName = null;
+            resources.ApplyResources(this.m_listviewLimitTo, "m_listviewLimitTo");
+            this.m_listviewLimitTo.BackgroundImage = null;
             this.m_listviewLimitTo.CheckBoxes = true;
             this.m_listviewLimitTo.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colUid,
             this.colNickName});
-            this.m_listviewLimitTo.Location = new System.Drawing.Point(283, 72);
+            this.m_listviewLimitTo.Font = null;
             this.m_listviewLimitTo.Name = "m_listviewLimitTo";
-            this.m_listviewLimitTo.Size = new System.Drawing.Size(188, 276);
-            this.m_listviewLimitTo.TabIndex = 12;
             this.m_listviewLimitTo.UseCompatibleStateImageBehavior = false;
             this.m_listviewLimitTo.View = System.Windows.Forms.View.Details;
             this.m_listviewLimitTo.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.m_listviewLimitTo_ColumnClick);
             // 
             // colUid
             // 
-            this.colUid.Text = "UID";
-            this.colUid.Width = 79;
+            resources.ApplyResources(this.colUid, "colUid");
             // 
             // colNickName
             // 
-            this.colNickName.Text = "Nick Name";
-            this.colNickName.Width = 96;
+            resources.ApplyResources(this.colNickName, "colNickName");
             // 
             // AddNewPlurk
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AccessibleDescription = null;
+            this.AccessibleName = null;
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(483, 391);
+            this.BackgroundImage = null;
             this.ControlBox = false;
             this.Controls.Add(this.m_listviewLimitTo);
             this.Controls.Add(this.m_btnCancel);
@@ -300,11 +330,12 @@
             this.Controls.Add(this.m_textContent);
             this.Controls.Add(this.m_cbQualifier);
             this.Controls.Add(this.m_cbLanguage);
+            this.Font = null;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = null;
             this.Name = "AddNewPlurk";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "Add New Plurk....";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
