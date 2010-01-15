@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,18 +117,86 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBox1.Text" xml:space="preserve">
-    <value>    Karma Booster is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
-
-    Karma Booster is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</value>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>排程選項</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="m_rbImmediate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>131, 16</value>
+  </data>
+  <data name="m_rbImmediate.Text" xml:space="preserve">
+    <value>按下新增後立即發噗</value>
+  </data>
+  <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>分鐘</value>
+  </data>
+  <data name="label5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 12</value>
+  </data>
+  <data name="label5.Text" xml:space="preserve">
+    <value>小時</value>
+  </data>
+  <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>17, 12</value>
+  </data>
+  <data name="label4.Text" xml:space="preserve">
+    <value>每</value>
+  </data>
+  <data name="m_rbRepeat.Size" type="System.Drawing.Size, System.Drawing">
+    <value>119, 16</value>
+  </data>
+  <data name="m_rbRepeat.Text" xml:space="preserve">
+    <value>每隔固定時間發噗</value>
+  </data>
+  <data name="m_rbOneTime.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 16</value>
+  </data>
+  <data name="m_rbOneTime.Text" xml:space="preserve">
+    <value>在特定時間發噗</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 12</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>語言:</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 12</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>修飾詞:</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 12</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>內容:</value>
+  </data>
+  <data name="m_chkboxAllowComments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>96, 16</value>
+  </data>
+  <data name="m_chkboxAllowComments.Text" xml:space="preserve">
+    <value>允許他人回應</value>
+  </data>
+  <data name="label7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>176, 12</value>
+  </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>只有下列使用者看得到（私噗）:</value>
+  </data>
+  <data name="m_btnAdd.Text" xml:space="preserve">
+    <value>新增</value>
+  </data>
+  <data name="m_btnCancel.Text" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="colNickName.Text" xml:space="preserve">
+    <value>帳號名稱</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>新增排程噗....</value>
   </data>
 </root>

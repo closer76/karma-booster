@@ -1,0 +1,26 @@
+Version 0.6.1.0 (Jan 15, 2010)
+
+   1. [Bug-fix] Failed to add new plurk when "limit_to" field is set.
+   2. Partially revised Plurk API according to Official Plurk API.
+   3. Stopped using the installer provided by Visual C#. Now only necessary
+      files are released and no installation required.
+   4. Added GPLv2 related information in both source files & About dialog.
+
+Version 0.6.0.2
+
+   1. Added Chinese (Taiwan) interface. 
+
+Version 0.6.0.1
+
+   1. Fixed qualifier incorrect problem.
+   2. Fixed system icon incorrect problem.
+   3. Fixed version string in About box.
+   4. Changed CLR requirement from .NET 3.5 to .NET 2.0. 
+
+Version 0.5.0.3
+
+   1. Supported multiple plurk scheduling items. 
+
+Version 0.5.0.1
+
+   1. The first public release. 
