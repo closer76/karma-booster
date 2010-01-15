@@ -7,6 +7,12 @@
 
 = 內容 =
 
+==Version 0.6.1.0 (Jan 15, 2010)==
+  # [Bug-fix] Failed to add new plurk when "limit_to" field is set.
+  # Partially revised Plurk API according to Official Plurk API.
+  # Stopped using the installer provided by Visual C#. Now only necessary files are released and no installation required.
+  # Added GPLv2 related information in both source files & About dialog.
+
 ==Version 0.6.0.2==
   # Added Chinese (Taiwan) interface.
 
