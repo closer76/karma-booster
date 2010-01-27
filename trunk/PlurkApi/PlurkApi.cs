@@ -389,7 +389,17 @@ namespace PlurkApi
             {
 #if (OFFICIAL_API)
                 using (JsonParser parser = new JsonParser(new StringReader(data), true))
-                    jsonObject = parser.ParseObject();
+                {
+                    try
+                    {
+                        jsonObject = parser.ParseObject();
+                    }
+                    catch
+                    {
+                        this.isLogged = false;
+                        return false;
+                    }
+                }
 
                 try
                 {
@@ -440,11 +450,23 @@ namespace PlurkApi
                     break;
 
                 using (JsonParser parser = new JsonParser(new StringReader(data), true))
-                    jsonObject = parser.ParseArray();
-
-                foreach (NetServ.Net.Json.IJsonType item in jsonObject)
                 {
-                    friends.Add(new PlurkFriend((JsonObject)item));
+                    try
+                    {
+                        jsonObject = parser.ParseArray();
+                    }
+                    catch
+                    {
+                        jsonObject = null;
+                    }
+                }
+
+                if (jsonObject != null)
+                {
+                    foreach (NetServ.Net.Json.IJsonType item in jsonObject)
+                    {
+                        friends.Add(new PlurkFriend((JsonObject)item));
+                    }
                 }
             }
 #else
@@ -518,7 +540,16 @@ namespace PlurkApi
 
             JsonObject jsonObject;
             using (JsonParser parser = new JsonParser(new StringReader(data), true))
-                jsonObject = parser.ParseObject();
+            {
+                try
+                {
+                    jsonObject = parser.ParseObject();
+                }
+                catch
+                {
+                    return false;
+                }
+            }
 
             try
             {
